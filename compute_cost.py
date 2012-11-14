@@ -13,10 +13,15 @@ def call_compute_cost_one_source(arg_tuple):
 def create_arg_tuples(w, training_data_list, p_warm_start_list, params):
 	arg_tuples = []
 	for i in range(len(training_data_list)):
-		arg_tuples.append((w.copy(), training_data_list[i]["source"], p_warm_start_list[i], copy.deepcopy(params)))
+		arg_tuples.append((w.copy(), training_data_list[i], p_warm_start_list[i], copy.deepcopy(params)))
 	return arg_tuples
 
-def compute_cost(w, training_data_list, p_warm_start_list, params, pool = None):
+def compute_cost(w, training_data_list, p_warm_start_list, p_grad_warm_start_list, params, pool = None):
+	print("==========")
+	print("HERE IS W:")
+	print(w)
+	print("==========")
+	w = numpy.reshape(w, (len(w), 1))
 	arg_tuples = create_arg_tuples(w, training_data_list, p_warm_start_list, params)
 	if pool == None:
 		result_tuples = map(call_compute_cost_one_source, arg_tuples)
@@ -31,4 +36,8 @@ def compute_cost(w, training_data_list, p_warm_start_list, params, pool = None):
 		i += 1
 
 	total_loss *= params["lambda"]
-	total_loss += numpy.sum(numpy.square(w))
+	#total_loss += numpy.sum(numpy.square(w))
+
+	print("cost = " + str(total_loss))
+
+	return total_loss
