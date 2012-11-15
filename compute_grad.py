@@ -35,7 +35,7 @@ def compute_grad(w, training_data_list, p_warm_start_list, p_grad_warm_start_lis
 		i = i + 1
 
 	w_grad *= params["lambda"]
-	#w_grad += 2 * w
+	w_grad += 2 * w
 	print("w_grad:")
 	print(w_grad)
 

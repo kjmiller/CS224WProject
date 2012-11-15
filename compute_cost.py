@@ -36,8 +36,11 @@ def compute_cost(w, training_data_list, p_warm_start_list, p_grad_warm_start_lis
 		i += 1
 
 	total_loss *= params["lambda"]
-	#total_loss += numpy.sum(numpy.square(w))
+	total_loss += numpy.sum(numpy.square(w))
 
 	print("cost = " + str(total_loss))
+
+	print("mean positive probability = %f"%(numpy.mean(p_warm_start_list[0][training_data_list[0]["positives"]])))
+	print("mean negative probability = %f"%(numpy.mean(p_warm_start_list[0][training_data_list[0]["negatives"]])))
 
 	return total_loss

@@ -3,6 +3,12 @@ import sys
 import numpy
 import scipy.sparse
 
+def exp_f(z):
+	return numpy.exp(z)
+
+def exp_grad(z):
+	return 1.0 * z
+
 def logistic(z):
 	return 1.0 / (1.0 + numpy.exp(-1.0 * z))
 
