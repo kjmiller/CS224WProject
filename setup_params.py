@@ -12,7 +12,7 @@ def setup_params():
 	params["partial_gradient_update_epsilon"] = 1e-12
 	params["page_rank_epsilon"] = 1e-12
 	params["backprop"] = 1
-	params["backprop_epsilon"] = 1e-12
+	params["backprop_epsilon"] = 1e-10
 	params["edge_strength_grad_fun"] = edge_computation.logistic_grad
 	params["maxiter"] = 1000
 	params["alpha"] = 0.2
