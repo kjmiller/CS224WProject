@@ -25,12 +25,14 @@ def compute_grad(w, training_data_list, p_warm_start_list, p_grad_warm_start_lis
 	arg_tuples = create_arg_tuples(w, training_data_list, p_warm_start_list, p_grad_warm_start_list, params)
 	if pool == None:
 		if params["backprop"]:
+			print "running backprop1"
 			result_tuples = map(call_compute_backprop_grad_one_source, arg_tuples)
 		else:
 			result_tuples = map(call_compute_grad_one_source, arg_tuples)
 
 	else:
 		if params["backprop"]:
+			print "running backprop2"
 			result_tuples = pool.map(call_compute_backprop_grad_one_source, arg_tuples)
 		else:
 			result_tuples = pool.map(call_compute_grad_one_source, arg_tuples)

@@ -12,7 +12,9 @@ import compute_cost
 import compute_grad
 import grad_one_source
 import multiprocessing
+import time
 
+start = time.clock()
 pool = multiprocessing.Pool(8)
 
 #We get gt's by taking training candidates, making the upper 500 of them be positive, and making the rest be negative
@@ -88,9 +90,12 @@ for i in range(num_graphs):
 p_warm_start_list = [numpy.ones((num_nodes, 1)) / (1.0 * num_nodes)] * len(training_data_list)
 p_grad_warm_start_list = [numpy.zeros((num_nodes, training_data_list[0]["num_features"]))] * len(training_data_list)
 
-w0 = numpy.random.randn(2, 1) #numpy.array([[1.0], [-1.0]])
-
+w0 = numpy.array([[2.0], [3.0]]) #numpy.random.randn(2, 1) #numpy.array([[1.0], [-1.0]])
+print "w0=",w0
 
 w_opt = supervised_random_walk.train(training_data_list, p_warm_start_list, p_grad_warm_start_list, params, compute_cost.compute_cost, compute_grad.compute_grad, w0, pool = pool)
 
 numpy.save("model_synthetic_backprop_mini_noisy%f.npy"%(sigma_squared), w_opt)
+
+print "Total time: %.6f sec "%((time.clock() - start))
+

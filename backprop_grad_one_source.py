@@ -10,6 +10,7 @@ def update_delta(delta_t, Q, params, training_data):
 	return (1 - params["teleport_prob"]) * Q.dot(delta_t) + params["teleport_prob"] / training_data["num_nodes"]
 
 def backprop_grad_one_source(s, p_warm_start, w, training_data, params):
+	
 	#First we recompute Q and its gradients
  	(A, A_data) = edge_computation.compute_A(w, training_data["feature_stack"], training_data["edge_ij"], params["edge_strength_fun"], training_data["num_nodes"])
 	Q = edge_computation.compute_Q(A, A_data, training_data["edge_ij"], s, training_data["num_nodes"], params)
@@ -36,8 +37,8 @@ def backprop_grad_one_source(s, p_warm_start, w, training_data, params):
 		while True:
 			dF_dw_last = numpy.copy(dF_dw)
 			dF_dw += numpy.dot(p_T_dQ_dw, delta)
-			print(dF_dw - dF_dw_last)
-			delta = update_delta(delta, Q, params, training_data)
+			#print(dF_dw - dF_dw_last)
+			delta = update_delta(delta, Q, params, training_data)			
 			max_diff = numpy.amax(numpy.fabs(dF_dw - dF_dw_last))
 			if max_diff < params["backprop_epsilon"]:
 				break

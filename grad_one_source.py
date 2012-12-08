@@ -43,6 +43,7 @@ def compute_dpprime_dp(training_data, p):
 
 #This is inefficient, but we only have to use it once!
 def build_diff_generating_mat(positives, negatives, num_nodes):
+	
 	ij = numpy.zeros((2, 2 * len(positives) * len(negatives)))
 	data = numpy.zeros(2 * len(positives) * len(negatives))
 	t = 0
@@ -55,7 +56,7 @@ def build_diff_generating_mat(positives, negatives, num_nodes):
 			ij[0, t + 1] = t / 2
 			ij[1, t + 1] = p
 			t += 2
-
+	
 	diff_generating_mat = scipy.sparse.csr_matrix((data, ij), shape = (ij.shape[1] / 2, num_nodes))
 
 	return diff_generating_mat

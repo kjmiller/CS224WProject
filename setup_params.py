@@ -20,6 +20,6 @@ def setup_params():
 	params["lambda"] = 1.0
 	params["margin"] = 1.0
 	params["K"] = 1000
-	params["prop_training_gts"] = 0.2
+	params["prop_training_gts"] = 1.0
 	params["stationary_p"] = 1
 	return params
