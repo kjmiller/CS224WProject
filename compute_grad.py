@@ -2,10 +2,14 @@ import os
 import sys
 import numpy
 import grad_one_source
+import backprop_grad_one_source
 import copy
 
 def call_compute_grad_one_source(arg_tuple):
 	return grad_one_source.grad_one_source(arg_tuple[0], arg_tuple[1], arg_tuple[2], arg_tuple[3], arg_tuple[4], arg_tuple[5])
+
+def call_compute_backprop_grad_one_source(arg_tuple):
+	return backprop_grad_one_source.backprop_grad_one_source(arg_tuple[0], arg_tuple[1], arg_tuple[3], arg_tuple[4], arg_tuple[5])
 
 def create_arg_tuples(w, training_data_list, p_warm_start_list, p_grad_warm_start_list, params):
 	arg_tuples = []
@@ -20,9 +24,16 @@ def compute_grad(w, training_data_list, p_warm_start_list, p_grad_warm_start_lis
 	#print(w.shape)
 	arg_tuples = create_arg_tuples(w, training_data_list, p_warm_start_list, p_grad_warm_start_list, params)
 	if pool == None:
-		result_tuples = map(call_compute_grad_one_source, arg_tuples)
+		if params["backprop"]:
+			result_tuples = map(call_compute_backprop_grad_one_source, arg_tuples)
+		else:
+			result_tuples = map(call_compute_grad_one_source, arg_tuples)
+
 	else:
-		result_tuples = pool.map(call_compute_grad_one_source, arg_tuples)
+		if params["backprop"]:
+			result_tuples = pool.map(call_compute_backprop_grad_one_source, arg_tuples)
+		else:
+			result_tuples = pool.map(call_compute_grad_one_source, arg_tuples)
 
 	w_grad = numpy.zeros(w.shape)
 	#print(w_grad.shape)

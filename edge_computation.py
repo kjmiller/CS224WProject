@@ -55,7 +55,7 @@ def compute_dQ_dwk(k, df_dwk, df_dwk_data, A, params, edge_ij, A_data):
 	for t in range(edge_ij.shape[1]):
 		i = edge_ij[0, t]
 		j = edge_ij[1, t]
-		dQ_dwk_data[t] = (1 - alpha) * (df_dwk_data[t] * row_sums_A[i] - A_data[t]  * row_sums_A_grad[i]) / denom[i]
+		dQ_dwk_data[t] = (1 - params["teleport_prob"]) * (1 - alpha) * (df_dwk_data[t] * row_sums_A[i] - A_data[t]  * row_sums_A_grad[i]) / denom[i]
 
 	dQ_dwk = scipy.sparse.csr_matrix((dQ_dwk_data, edge_ij), shape = df_dwk.shape)
 	#print(dQ_dwk.todense())

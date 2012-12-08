@@ -13,7 +13,7 @@ import compute_grad
 import grad_one_source
 import multiprocessing
 
-pool = multiprocessing.Pool(8)
+pool = multiprocessing.Pool(1)
 
 #We get gt's by taking training candidates, making the upper 500 of them be positive, and making the rest be negative
 #To train, we randomly sample some proportion of the gt positives and negatives.  We still look at ALL the candidates when making predictions.
@@ -92,4 +92,4 @@ w0 = numpy.random.randn(2, 1) #numpy.array([[1.0], [-1.0]])
 
 w_opt = supervised_random_walk.train(training_data_list, p_warm_start_list, p_grad_warm_start_list, params, compute_cost.compute_cost, compute_grad.compute_grad, w0, pool = pool)
 
-numpy.save("model_synthetic_mini_noisy%f.npy"%(sigma_squared), w_opt)
+numpy.save("model_synthetic_backprop_mini_noisy%f.npy"%(sigma_squared), w_opt)
